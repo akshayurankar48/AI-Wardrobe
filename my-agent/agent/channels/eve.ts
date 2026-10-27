@@ -15,6 +15,13 @@ const allowedOrigins = new Set(
     .filter(Boolean),
 );
 
+for (const vercelHost of [
+  process.env.VERCEL_URL,
+  process.env.VERCEL_PROJECT_PRODUCTION_URL,
+]) {
+  if (vercelHost) allowedOrigins.add(`https://${vercelHost}`);
+}
+
 const clerkSession: AuthFn<Request> = async (request) => {
   const token = extractBearerToken(request.headers.get("authorization"));
   if (!token || !clerkJwks || !clerkIssuer) return null;

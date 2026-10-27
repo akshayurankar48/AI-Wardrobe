@@ -42,3 +42,22 @@ Convex agent skills for common tasks can be installed by running
 `npx convex ai-files install`.
 
 <!-- convex-ai-end -->
+
+## Clerk + Convex authentication state
+
+- Use Convex's `Authenticated`, `Unauthenticated`, and `AuthLoading` components from `convex/react` to render UI based on authentication state. Do not use Clerk's `Show` or `ClerkLoading` for this purpose.
+- When UI logic needs to know whether a user is authenticated by Convex, use `useConvexAuth()` from `convex/react`, not Clerk's `useAuth()`. `useConvexAuth()` waits until the Clerk token is fetched and validated by the Convex backend. Use Clerk's `useAuth()` only as the adapter passed into `ConvexProviderWithClerk`.
+- Keep `<ClerkProvider>` outside `<ConvexClientProvider>` so the Convex provider can access Clerk context.
+- Source: [Clerk — Integrate Convex with Clerk: Show UI based on auth state](https://clerk.com/docs/guides/development/integrations/databases/convex#show-ui-based-on-auth-state).
+
+## Keep project guidance current
+
+- Treat the user's feedback and corrections during this build as project requirements. Update this `AGENTS.md` in the same task when feedback establishes a reusable implementation rule or constraint, so future agents follow it.
+- Keep additions concise and actionable. Preserve existing guidance and distinguish project decisions from official framework instructions; verify official guidance when adding or changing framework-specific rules.
+
+## Eve + Clerk + Convex integration
+
+- The app uses Eve's supported Next.js integration mounted from `my-agent/` on the same origin. The chat is rendered only inside Convex's `Authenticated` state, and requests send Clerk's Convex-audience session token for Eve to verify against the same Clerk issuer.
+- This wiring authenticates Eve requests but does not persist Eve transcripts in Convex. Add a documented Convex-to-Eve bridge only when Convex-backed transcript persistence or server-side orchestration is needed; check peer-version compatibility before installing a bridge package.
+- Before adding bridge environment variables, identify the actual integration pattern and follow its documentation. Do not infer a secret name or add a secret based only on a screenshot; keep all secret values out of source files and commits.
+- Report local Eve runtime, Vercel deployment, Convex authentication, Convex-backed persistence/bridge, and end-to-end authenticated behavior as separate completion states.
