@@ -1,11 +1,5 @@
 import Image from "next/image";
-import {
-  Show,
-  SignInButton,
-  SignUpButton,
-  UserButton,
-} from "@clerk/nextjs";
-import { Suspense } from "react";
+import { AuthControls } from "@/components/AuthControls";
 
 export default function Home() {
   return (
@@ -14,25 +8,7 @@ export default function Home() {
         <span className="text-sm font-semibold tracking-wide text-zinc-900 dark:text-zinc-100">
           AI Wardrobe
         </span>
-        <Suspense fallback={<div className="h-9 w-32" />}>
-          <Show when="signed-out">
-            <div className="flex items-center gap-3">
-              <SignInButton>
-                <button className="rounded-full px-4 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-800">
-                  Sign in
-                </button>
-              </SignInButton>
-              <SignUpButton>
-                <button className="rounded-full bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-700 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-200">
-                  Sign up
-                </button>
-              </SignUpButton>
-            </div>
-          </Show>
-          <Show when="signed-in">
-            <UserButton />
-          </Show>
-        </Suspense>
+        <AuthControls />
       </header>
       <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
         <Image

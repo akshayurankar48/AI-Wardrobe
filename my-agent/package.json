@@ -1,0 +1,35 @@
+{
+  "name": "my-agent",
+  "version": "0.0.0",
+  "type": "module",
+  "imports": {
+    "#*": "./agent/*",
+    "#evals/*": "./evals/*"
+  },
+  "scripts": {
+    "build": "eve build",
+    "deploy": "eve deploy",
+    "dev": "eve dev",
+    "eval": "eve eval",
+    "start": "eve start",
+    "typecheck": "tsc"
+  },
+  "dependencies": {
+    "@vercel/connect": "2.5.2",
+    "ai": "^7.0.137",
+    "eve": "^0.84.0",
+    "jose": "^6.2.13",
+    "zod": "4.6.6"
+  },
+  "devDependencies": {
+    "@types/node": "24.x",
+    "typescript": "7.0.2"
+  },
+  "engines": {
+    "node": "24.x"
+  },
+  "overrides": {
+    "undici": "8.12.2",
+    "zod": "4.6.6"
+  }
+}
