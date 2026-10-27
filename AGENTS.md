@@ -59,5 +59,6 @@ Convex agent skills for common tasks can be installed by running
 
 - The app uses Eve's supported Next.js integration mounted from `my-agent/` on the same origin. The chat is rendered only inside Convex's `Authenticated` state, and requests send Clerk's Convex-audience session token for Eve to verify against the same Clerk issuer.
 - This wiring authenticates Eve requests but does not persist Eve transcripts in Convex. Add a documented Convex-to-Eve bridge only when Convex-backed transcript persistence or server-side orchestration is needed; check peer-version compatibility before installing a bridge package.
+- Eve `init` scaffolds the core agent, not app-specific capabilities. Add model-callable tools as files under `my-agent/agent/tools/`; do not rerun `eve init` over an existing `agent/` tree to create optional folders.
 - Before adding bridge environment variables, identify the actual integration pattern and follow its documentation. Do not infer a secret name or add a secret based only on a screenshot; keep all secret values out of source files and commits.
 - Report local Eve runtime, Vercel deployment, Convex authentication, Convex-backed persistence/bridge, and end-to-end authenticated behavior as separate completion states.
