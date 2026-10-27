@@ -1,7 +1,8 @@
 "use client";
 
 import { useAuth } from "@clerk/nextjs";
-import { Authenticated, AuthLoading, Unauthenticated } from "convex/react";
+import { Authenticated, AuthLoading, Unauthenticated, useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 import { activeTurn } from "eve/events";
 import { Client } from "eve/client";
 import { useEveAgent } from "eve/react";
@@ -9,6 +10,7 @@ import { FormEvent, useEffect, useMemo, useState } from "react";
 
 function AgentChat() {
   const { getToken } = useAuth();
+  const registeredSessions = useQuery(api.eveSessions.listMine);
   const [draft, setDraft] = useState("");
   const [connection, setConnection] = useState<"checking" | "connected" | "unavailable">("checking");
   const client = useMemo(
@@ -61,10 +63,10 @@ function AgentChat() {
   return (
     <div className="flex w-full flex-col gap-4">
       <p aria-live="polite" className="text-xs text-zinc-500">
-        {connection === "checking"
+        {connection === "checking" || registeredSessions === undefined
           ? "Checking Clerk-authenticated Eve connection…"
           : connection === "connected"
-            ? "Eve connected · Clerk session verified"
+            ? "Eve connected · Clerk session verified · Convex sync active"
             : "Eve connection unavailable · check the Clerk session and Eve runtime"}
       </p>
       <div className="min-h-48 space-y-4 rounded-2xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-950">
