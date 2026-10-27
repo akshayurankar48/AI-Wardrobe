@@ -1,8 +1,39 @@
 import Image from "next/image";
+import {
+  Show,
+  SignInButton,
+  SignUpButton,
+  UserButton,
+} from "@clerk/nextjs";
+import { Suspense } from "react";
 
 export default function Home() {
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
+      <header className="absolute top-0 flex w-full items-center justify-between px-6 py-5 sm:px-10">
+        <span className="text-sm font-semibold tracking-wide text-zinc-900 dark:text-zinc-100">
+          AI Wardrobe
+        </span>
+        <Suspense fallback={<div className="h-9 w-32" />}>
+          <Show when="signed-out">
+            <div className="flex items-center gap-3">
+              <SignInButton>
+                <button className="rounded-full px-4 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-800">
+                  Sign in
+                </button>
+              </SignInButton>
+              <SignUpButton>
+                <button className="rounded-full bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-700 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-200">
+                  Sign up
+                </button>
+              </SignUpButton>
+            </div>
+          </Show>
+          <Show when="signed-in">
+            <UserButton />
+          </Show>
+        </Suspense>
+      </header>
       <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
         <Image
           className="dark:invert h-5 w-[100px]"
